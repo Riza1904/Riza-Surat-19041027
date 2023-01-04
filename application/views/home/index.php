@@ -47,30 +47,25 @@
                 <label for="divisi">Divisi</label>
                 <select class="form-control" name="divisi" id="divisi" style="width: 350px">
                   <option value="">Pilih</option>
-                  <option value="personalia">Personalia</option>
-                  <option value="humas">Humas</option>
-                  <option value="teknik">Teknik</option>
+                  <?php foreach ($divisi as $data) : ?>
+                  <option value="<?= $data['id']; ?>"><?= $data['divisi']; ?></option>
+                  <?php endforeach; ?>
+
                 </select>
                 <?= form_error('divisi', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>
               <div class="form-group">
                 <label for="kategori_surat">Kategori Surat</label>
                 <div class="">
+                  <?php foreach ($kategori as $data) : ?>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="kategori_surat[]" id="inlineCheckbox1"
-                      value="surat pribadi">
-                    <label class="form-check-label" for="inlineCheckbox1">Surat Pribadi</label>
+                    <input class="form-check-input" type="checkbox" name="kategori_surat[]"
+                      id="inlineCheckbox<?= $data['id']; ?>" value="<?= $data['kategori_surat']; ?>">
+                    <label class="form-check-label"
+                      for="inlineCheckbox<?= $data['id']; ?>"><?= $data['kategori_surat']; ?></label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="surat perintah"
-                      name="kategori_surat[]">
-                    <label class="form-check-label" for="inlineCheckbox2">Surat Perintah</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="surat kerja"
-                      name="kategori_surat[]">
-                    <label class="form-check-label" for="inlineCheckbox3">Surat Kerja</label>
-                  </div>
+                  <?php endforeach; ?>
+
                 </div>
                 <?= form_error('kategori_surat[]', '<small class="text-danger pl-3">', '</small>'); ?>
               </div>

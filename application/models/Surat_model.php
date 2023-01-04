@@ -13,7 +13,7 @@ class Surat_model extends CI_model
       'pengirim' => htmlspecialchars($this->input->post('pengirim', true)),
       'penerima' => htmlspecialchars($this->input->post('penerima', true)),
       'perihal' => htmlspecialchars($this->input->post('perihal', true)),
-      'divisi' => htmlspecialchars($this->input->post('divisi', true)),
+      'divisi_id' => htmlspecialchars($this->input->post('divisi', true)),
       'kategori_surat' => $kategori_surat_string,
       'file' => $new_image,
       'tipe_surat' => htmlspecialchars($this->input->post('tipe_surat', true)),
@@ -25,19 +25,89 @@ class Surat_model extends CI_model
     $this->db->insert('data-surat', $data);
   }
 
+  public function getDivisiAll()
+  {
+    return $this->db->get('divisi')->result_array();
+  }
+
+  public function tambahDataDivisi()
+  {
+    $data = [
+      'divisi' => htmlspecialchars($this->input->post('divisi', true)),
+    ];
+
+    $this->db->insert('divisi', $data);
+  }
+
+  public function hapusDataDivisi($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('divisi');
+  }
+
+  public function editDataDivisi($id)
+  {
+
+    $data = [
+      'divisi' => htmlspecialchars($this->input->post('divisi', true)),
+    ];
+    $this->db->where('id', $id);
+    $this->db->update('divisi', $data);
+  }
+
+  public function getKategoriAll()
+  {
+    return $this->db->get('kategori_surat')->result_array();
+  }
+
+  public function tambahDataKategori()
+  {
+    $data = [
+      'kategori_surat' => htmlspecialchars($this->input->post('kategori_surat', true)),
+    ];
+
+    $this->db->insert('kategori_surat', $data);
+  }
+
+  public function hapusDataKategori($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('kategori_surat');
+  }
+
+  public function editDataKategori($id)
+  {
+
+    $data = [
+      'kategori_surat' => htmlspecialchars($this->input->post('kategori_surat', true)),
+    ];
+    $this->db->where('id', $id);
+    $this->db->update('kategori_surat', $data);
+  }
+
   public function getSuratMasuk()
   {
     $data = [
       'tipe_surat' => 'masuk'
     ];
-    return $this->db->get_where('data-surat', $data)->result_array();
+    $this->db->select('data-surat.id,nomor_surat,pengirim,penerima,perihal,file,ket,kategori_surat,tipe_surat,tanggal_surat,divisi');
+    $this->db->from('data-surat');
+    $this->db->join('divisi', 'data-surat.divisi_id=divisi.id', 'left');
+    $this->db->where($data);
+    $query = $this->db->get();
+    return $query->result_array();
   }
   public function getSuratKeluar()
   {
     $data = [
       'tipe_surat' => 'keluar'
     ];
-    return $this->db->get_where('data-surat', $data)->result_array();
+    $this->db->select('data-surat.id,nomor_surat,pengirim,penerima,perihal,file,ket,kategori_surat,tipe_surat,tanggal_surat,divisi');
+    $this->db->from('data-surat');
+    $this->db->join('divisi', 'data-surat.divisi_id=divisi.id','left');
+    $this->db->where($data);
+    $query = $this->db->get();
+    return $query->result_array();
   }
 
   public function hapusDataSurat($id)
@@ -63,7 +133,7 @@ class Surat_model extends CI_model
       'pengirim' => htmlspecialchars($this->input->post('pengirim', true)),
       'penerima' => htmlspecialchars($this->input->post('penerima', true)),
       'perihal' => htmlspecialchars($this->input->post('perihal', true)),
-      'divisi' => htmlspecialchars($this->input->post('divisi', true)),
+      'divisi_id' => htmlspecialchars($this->input->post('divisi', true)),
       'kategori_surat' => $kategori_surat_string,
       'tipe_surat' => htmlspecialchars($this->input->post('tipe_surat', true)),
       'ket' => htmlspecialchars($this->input->post('ket', true)),

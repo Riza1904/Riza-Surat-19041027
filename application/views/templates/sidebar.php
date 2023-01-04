@@ -58,6 +58,27 @@
         </div>
       </div>
   </li>
+  <?php if ($title == ('Setting')) : ?>
+  <li class="nav-item active">
+    <?php else : ?>
+  <li class="nav-item">
+    <?php endif; ?>
+    <a class="nav-link pb-0 collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+      aria-controls="collapse4">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Setting</span>
+    </a>
+    <?php if ($title == ('Setting')) : ?>
+    <div id="collapse4" class="collapse show" aria-labelledby="heading3" data-parent="#accordionSidebar">
+      <?php else : ?>
+      <div id="collapse4" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
+        <?php endif; ?>
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="<?= base_url('setting/divisi'); ?>">Divisi</a>
+          <a class="collapse-item" href="<?= base_url('setting/kategori'); ?>">Ketegori Surat</a>
+        </div>
+      </div>
+  </li>
 
   <li class="nav-item">
     <a class="nav-link pb-0" href="<?= base_url('auth/logout') ?>">

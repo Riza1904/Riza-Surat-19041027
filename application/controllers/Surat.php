@@ -14,6 +14,9 @@ class Surat extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Dashboard';
+		$data['divisi'] = $this->surat->getDivisiAll();
+		$data['kategori'] = $this->surat->getKategoriAll();
+
 
 		$this->form_validation->set_rules('nomor_surat', 'Nomor Surat', 'required|trim|is_unique[data-surat.nomor_surat]', ['is_unique' => 'Nomor surat Sudah digunakan']);
 		$this->form_validation->set_rules('pengirim', 'Pengirim', 'required|trim');
@@ -29,7 +32,7 @@ class Surat extends CI_Controller
 			$this->load->view('templates/header', $data);
 			$this->load->view('templates/sidebar', $data);
 			$this->load->view('templates/topbar');
-			$this->load->view('home/index');
+			$this->load->view('home/index', $data);
 			$this->load->view('templates/footer');
 		} else {
 			$upload_img = $_FILES['image']['name'];
@@ -100,7 +103,9 @@ class Surat extends CI_Controller
 	{
 		$data['title'] = 'Ubah Surat';
 		$data['redirect_page'] = $redirect_page;
-		$data['surat'] = $this->db->get_where('data-surat', ['id' => $id])->row_array();;
+		$data['surat'] = $this->db->get_where('data-surat', ['id' => $id])->row_array();
+		$data['divisi'] = $this->surat->getDivisiAll();
+		$data['kategori'] = $this->surat->getKategoriAll();
 		$this->form_validation->set_rules('pengirim', 'Pengirim', 'required|trim');
 		$this->form_validation->set_rules('penerima', 'Penerima', 'required|trim');
 		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim');
